@@ -9,10 +9,26 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    
+    @IBOutlet weak var tempLabel: UILabel!
+    
+    @IBOutlet weak var descLabel: UILabel!
+    
+    @IBOutlet weak var cityLabel: UILabel!
+    
+    @IBAction func setCityClicked(_ sender: UIButton) {
+        print("City button clicked")
+    }
+    
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let weather = Weather(currLat: "33.7592", currLon: "-117.9897")
+        weather.getWeather()
     }
 
     override func didReceiveMemoryWarning() {

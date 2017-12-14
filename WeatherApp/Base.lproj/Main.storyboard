@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="WeatherApp" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,8 +21,54 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Temp" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvR-LO-usU">
+                                <rect key="frame" x="113" y="28" width="137" height="67"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="56"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fvk-8n-2ac">
+                                <rect key="frame" x="137" y="103" width="88" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="City" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USg-zK-X7d">
+                                <rect key="frame" x="166" y="139" width="31" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cyd-Gb-hYw">
+                                <rect key="frame" x="154" y="204" width="54" height="30"/>
+                                <state key="normal" title="Set City"/>
+                                <connections>
+                                    <action selector="setCityClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="aMH-qP-Sdd"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="USg-zK-X7d" firstAttribute="top" secondItem="Fvk-8n-2ac" secondAttribute="bottom" constant="14" id="3m5-s8-EUW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Cyd-Gb-hYw" secondAttribute="trailing" constant="151" id="6YG-o0-NGZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="USg-zK-X7d" secondAttribute="trailing" constant="162" id="Bvp-yi-caX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Fvk-8n-2ac" secondAttribute="trailing" constant="128" id="Thn-RA-AlE"/>
+                            <constraint firstItem="lvR-LO-usU" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="304" id="V6E-oj-Bme"/>
+                            <constraint firstItem="Cyd-Gb-hYw" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="138" id="YPU-cK-Jwc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lvR-LO-usU" secondAttribute="trailing" constant="103" id="crl-Gw-0kX"/>
+                            <constraint firstItem="Fvk-8n-2ac" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="127" id="j7M-07-8GG"/>
+                            <constraint firstItem="Fvk-8n-2ac" firstAttribute="top" secondItem="lvR-LO-usU" secondAttribute="bottom" constant="32" id="kxN-Yy-gta"/>
+                            <constraint firstItem="Cyd-Gb-hYw" firstAttribute="top" secondItem="USg-zK-X7d" secondAttribute="bottom" constant="36" id="uKo-eG-uGD"/>
+                            <constraint firstItem="lvR-LO-usU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="103" id="yjA-QP-7a9"/>
+                            <constraint firstItem="USg-zK-X7d" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="150" id="z05-Bp-RMc"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="cityLabel" destination="USg-zK-X7d" id="BqA-d4-W3w"/>
+                        <outlet property="descLabel" destination="Fvk-8n-2ac" id="4EI-Yn-dyg"/>
+                        <outlet property="tempLabel" destination="lvR-LO-usU" id="QeB-gV-z2E"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
