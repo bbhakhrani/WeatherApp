@@ -28,7 +28,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         let weather = Weather(currLat: "33.7592", currLon: "-117.9897")
-        weather.getWeather()
     }
 
     override func didReceiveMemoryWarning() {
