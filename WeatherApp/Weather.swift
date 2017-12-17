@@ -8,22 +8,63 @@
 
 import Foundation
 
+struct WeatherData {
+    var temp:Double
+    var tempMin:Double
+    var tempMax:Double
+    var description: String
+    var city: String
+    var iconName: String
+}
+
 class Weather{
     private let openWeatherMapBaseURL = "http://api.openweathermap.org/data/2.5/"
     private let openWeatherMapAPIKey = "5b986aec3061a6ebe330affa40fbac0a"
-    private var description: String
-    private var temp: Double
-    private var tempMin: Double
-    private var tempMax: Double
-    
     init(){
-        description = ""
-        temp = 0
-        tempMin = 0
-        tempMax = 0
     }
     
-    func getWeatherData(lat:String, lon:String, closure: @escaping ([String: Any]) ->()) {
+    private func parseData(dictionary:[String:Any]) -> WeatherData {
+        var temp:Double = 0
+        var tempMin:Double = 0
+        var tempMax:Double = 0
+        var description = ""
+        var city = ""
+        var iconName = ""
+        
+            if let tmpCity = dictionary["name"] as? String {
+                city = tmpCity
+            }
+            if let main = dictionary["main"] as? [String: Any] {
+                if let tmpTemp = main["temp"] as? Double {
+                    temp = tmpTemp
+                }
+                if let tmpTempMin = main["temp_min"] as? Double {
+                    tempMin = tmpTempMin
+                }
+                if let tmpTempMax = main["temp_max"] as? Double {
+                    tempMax = tmpTempMax
+                }
+            } else {
+                print("main not a sub dictionary")
+            }
+            if let weatherArray = dictionary["weather"] as? [[String: Any]] {
+                if let tmpDescription = weatherArray[0]["description"] as? String {
+                    description = tmpDescription
+                }
+                if let tmpIconName = weatherArray[0]["icon"] as? String {
+                    iconName = tmpIconName
+                    print(iconName)
+                }
+                
+            } else {
+                print("weatther is not an array")
+            }
+        let weatherData = WeatherData(temp: temp, tempMin: tempMin, tempMax: tempMax, description: description, city: city, iconName: iconName)
+        
+        return weatherData
+    }
+    
+    func getWeatherData(lat:String, lon:String, closure: @escaping (WeatherData) -> ()) {
         let weatherRequestURLString = "\(openWeatherMapBaseURL)weather?lat=\(lat)&lon=\(lon)&appid=\(openWeatherMapAPIKey)"
         let weatherRequestURL = URL(string: weatherRequestURLString)!
         let session = URLSession.shared.dataTask(with: weatherRequestURL){(data, response, error) in
@@ -31,39 +72,14 @@ class Weather{
                 print("Error: \n\(error)")
             }
             else { //Success
-                var weatherData = [String:Any]()
                 
                 let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-                
                 if let dictionary = json as? [String: Any] {
-                    if let main = dictionary["main"] as? [String: Any] {
-                        if let tmpTemp = main["temp"] as? Double {
-                            self.temp = tmpTemp
-                            weatherData["temp"] = self.temp
-                        }
-                        if let tmpTempMin = main["temp_min"] as? Double {
-                            self.tempMin = tmpTempMin
-                            weatherData["tempMin"] = self.tempMin
-                        }
-                        if let tmpTempMax = main["temp_max"] as? Double {
-                            self.tempMax = tmpTempMax
-                            weatherData["tempMax"] = self.tempMax
-                        }
-                    } else {
-                        print("main not a sub dictionary")
-                    }
-                    if let weatherArray = dictionary["weather"] as? [[String: Any]] {
-                        if let description = weatherArray[0]["description"] as? String {
-                            weatherData["desc"] = description
-                        }
-                        
-                    } else {
-                        print("weatther is not an array")
-                    }
+                    let weatherData = self.parseData(dictionary: dictionary)
+                    closure(weatherData)
                 } else {
                     print("JSON invalid")
                 }
-                closure(weatherData)
             }
         }
         
@@ -71,7 +87,7 @@ class Weather{
         
     }
     
-    func getFiveDayWeather(lat:String, lon:String) {
+    func getFiveDayWeather(lat:String, lon:String, closure: @escaping ([WeatherData]) -> ()) {
         let weatherRequestURLString = "\(openWeatherMapBaseURL)forecast?lat=\(lat)&lon=\(lon)&appid=\(openWeatherMapAPIKey)"
         let weatherRequestURL = URL(string: weatherRequestURLString)!
         let session = URLSession.shared.dataTask(with: weatherRequestURL){(data, response, error) in
@@ -80,7 +96,27 @@ class Weather{
             }
             else { //Success
                 let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-                print(json!)
+                
+                var fiveDayData = [WeatherData]()
+                if let dictionary = json as? [String: Any] {
+                    //print(dictionary)
+                    if let dataArray = dictionary["list"] as? [[String:Any]] {
+                        var j = 0;
+                        var i = 0;
+                        while i < dataArray.count {
+                            print(i)
+                            print(j)
+                            fiveDayData.append(self.parseData(dictionary: dataArray[i]))
+                            j+=1
+                            i+=8
+                        }
+                        closure(fiveDayData)
+                    } else {
+                        print("ErrorError")
+                    }
+                } else {
+                    print("Error")
+                }
             }
         }
         session.resume()

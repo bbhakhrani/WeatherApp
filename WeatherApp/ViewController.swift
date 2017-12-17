@@ -14,6 +14,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
+    @IBOutlet weak var iconImageView: UIImageView!
 //    @IBOutlet weak var tempLabel: UILabel!
 //    
 //    @IBOutlet weak var descLabel: UILabel!
@@ -27,15 +28,15 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         return ((kelvinTemp * 1.8) - 459.67)
     }
     
-    func updateData(weatherData: [String: Any]) {
-        if var temp = weatherData["temp"] as? Double {
-            temp = kelvinToFarenheit(kelvinTemp: temp)
-            self.tempLabel.text = String(format: "%.2f", temp) + " \u{00B0}F"
-            self.tempLabel.sizeToFit()
-        }
-        if let desc = weatherData["desc"] as? String {
-            self.descLabel.text = desc
-        }
+    func updateToday(weatherData: WeatherData) {
+        print(weatherData)
+        let temp = kelvinToFarenheit(kelvinTemp: weatherData.temp)
+        self.tempLabel.text = String(format: "%.2f", temp) + " \u{00B0}F"
+        self.tempLabel.sizeToFit()
+        self.descLabel.text = weatherData.description
+        self.cityLabel.text = weatherData.city
+        self.iconImageView.image = UIImage(named: weatherData.iconName)
+        
         print("updated")
     }
     
@@ -47,7 +48,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
         let weather = Weather()
-        weather.getWeatherData(lat: String(location.coordinate.latitude), lon: String(location.coordinate.longitude), closure: updateData)
+        weather.getWeatherData(lat: String(location.coordinate.latitude), lon: String(location.coordinate.longitude), closure: updateToday)
+        //weather.getFiveDayWeather(lat: String(location.coordinate.latitude), lon: String(location.coordinate.longitude))
         
         
     }
@@ -55,8 +57,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        let weather = Weather()
-        weather.getFiveDayWeather(lat: "33.76", lon: "-117.99")
         manager.delegate = self
         manager.requestWhenInUseAuthorization()
         manager.requestLocation()
