@@ -210,7 +210,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <tabBarItem key="tabBarItem" title="Item" id="4qO-pw-2gj"/>
+                    <tabBarItem key="tabBarItem" title="16 Day" id="4qO-pw-2gj"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dN6-Gl-j60" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -78,6 +78,8 @@ class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewD
     func dismissKeyboard() {
         view.endEditing(true)
         GlobalCityData.name = selectTextField.text!
+        let weather = Weather()
+        weather.getWeatherData(city: GlobalCityData.name, closure: updateToday)
         print(GlobalCityData.name)
     }
 
