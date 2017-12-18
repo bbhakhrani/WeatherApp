@@ -1,15 +1,15 @@
 //
-//  FiveDayViewControllerTableViewController.swift
+//  SixteenDayTableViewController.swift
 //  WeatherApp
 //
-//  Created by Bhakhrani on 12/17/17.
+//  Created by Bhakhrani on 12/18/17.
 //  Copyright © 2017 Bhakhrani. All rights reserved.
 //
 
 import UIKit
 import CoreLocation
 
-class FiveDayViewControllerTableViewController: UITableViewController, CLLocationManagerDelegate {
+class SixteenDayTableViewController: UITableViewController, CLLocationManagerDelegate {
     func kelvinToFarenheit(kelvinTemp: Double) -> Double {
         return ((kelvinTemp * 1.8) - 459.67)
     }
@@ -19,14 +19,13 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
     
     func updateFiveDay(weatherData: [WeatherData]) {
         self.fiveDayData = weatherData
-            
+        
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
         
     }
-    
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error")
     }
@@ -43,14 +42,16 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
         }
         
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadData()
     }
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("five day forcast")
+        
         manager.delegate = self
         if GlobalCityData.useLocation {
             manager.requestWhenInUseAuthorization()
@@ -60,8 +61,7 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
             let weather = Weather()
             weather.getFiveDayWeather(city: GlobalCityData.name, closure: updateFiveDay)
         }
-        print(GlobalCityData.name)
-        //manager.startMonitoringSignificantLocationChanges()
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -78,30 +78,30 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return fiveDayData.count
+        return fiveDayData.count * 3
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM dd, yyyy"
         
-        return dateFormatter.string(from: fiveDayData[section].date)
+        return dateFormatter.string(from: fiveDayData[section/3].date)
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "fiveDayCell", for: indexPath)
-
-        let weatherObject = fiveDayData[indexPath.section]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "sixteenDayCell", for: indexPath)
+        
+        let weatherObject = fiveDayData[(indexPath.section / 3)]
         cell.textLabel?.text = weatherObject.description
         cell.detailTextLabel?.text = String(format: "%.2f", kelvinToFarenheit(kelvinTemp: weatherObject.tempMax)) + " \u{00B0}F / " + String(format: "%.2f", kelvinToFarenheit(kelvinTemp: weatherObject.tempMin)) + " \u{00B0}F"
         cell.imageView?.image = UIImage(named: weatherObject.iconName)
         return cell
     }
-    
+
 
     /*
     // Override to support conditional editing of the table view.

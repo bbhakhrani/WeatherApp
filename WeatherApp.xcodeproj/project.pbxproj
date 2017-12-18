@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D633E6FC1FE80EA900E304B1 /* SixteenDayTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D633E6FB1FE80EA900E304B1 /* SixteenDayTableViewController.swift */; };
 		D64706E71FE1B5BB00B2E445 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64706E61FE1B5BB00B2E445 /* AppDelegate.swift */; };
 		D64706E91FE1B5BB00B2E445 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D64706E81FE1B5BB00B2E445 /* ViewController.swift */; };
 		D64706EC1FE1B5BB00B2E445 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D64706EA1FE1B5BB00B2E445 /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D633E6FB1FE80EA900E304B1 /* SixteenDayTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SixteenDayTableViewController.swift; sourceTree = "<group>"; };
 		D64706E31FE1B5BB00B2E445 /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D64706E61FE1B5BB00B2E445 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D64706E81FE1B5BB00B2E445 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				D6858C561FE65A8D00129579 /* Assets.xcassets */,
 				D64706EF1FE1B5BB00B2E445 /* LaunchScreen.storyboard */,
 				D64706F21FE1B5BB00B2E445 /* Info.plist */,
+				D633E6FB1FE80EA900E304B1 /* SixteenDayTableViewController.swift */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D633E6FC1FE80EA900E304B1 /* SixteenDayTableViewController.swift in Sources */,
 				D64706E91FE1B5BB00B2E445 /* ViewController.swift in Sources */,
 				D64706FC1FE1E18600B2E445 /* Weather.swift in Sources */,
 				D64706E71FE1B5BB00B2E445 /* AppDelegate.swift in Sources */,
