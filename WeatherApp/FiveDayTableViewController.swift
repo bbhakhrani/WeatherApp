@@ -46,7 +46,6 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //manager.delegate = self
         self.reloadInputViews()
     }
     override func viewDidLoad() {
