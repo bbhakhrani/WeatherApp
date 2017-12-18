@@ -31,18 +31,37 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
         print("error")
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
         let location = locations[0]
         let weather = Weather()
-        weather.getFiveDayWeather(lat: String(location.coordinate.latitude), lon: String(location.coordinate.longitude), closure: updateFiveDay)
+        if GlobalCityData.useLocation {
+            weather.getFiveDayWeather(lat: String(location.coordinate.latitude), lon: String(location.coordinate.longitude), closure: updateFiveDay)
+        }
+        else {
+            let weather = Weather()
+            weather.getFiveDayWeather(city: GlobalCityData.name, closure: updateFiveDay)
+        }
+        
     }
 
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //manager.delegate = self
+        self.reloadInputViews()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         print("five day forcast")
         manager.delegate = self
-        manager.requestWhenInUseAuthorization()
-        manager.requestLocation()
+        if GlobalCityData.useLocation {
+            manager.requestWhenInUseAuthorization()
+            manager.requestLocation()
+        }
+        else {
+            let weather = Weather()
+            weather.getFiveDayWeather(city: GlobalCityData.name, closure: updateFiveDay)
+        }
+        print(GlobalCityData.name)
         //manager.startMonitoringSignificantLocationChanges()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

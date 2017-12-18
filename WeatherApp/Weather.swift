@@ -33,9 +33,12 @@ class Weather{
         var iconName = ""
         var time:Double = 0
         
-            if let tmpCity = dictionary["name"] as? String {
-                city = tmpCity
-            }
+        if let tmpCity = dictionary["name"] as? String {
+            city = tmpCity
+        }
+        else {
+            print("error wth name \n\n\n\n\n\n\n\n")
+        }
         if let UTC = dictionary["dt"] as? Double {
             time = UTC
         }
@@ -67,6 +70,37 @@ class Weather{
         
         return weatherData
     }
+    func getWeatherData(city: String, closure: @escaping (WeatherData) -> ()) {
+        let escapedCity = city.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        print(escapedCity!)
+        let weatherRequestURLString = "\(openWeatherMapBaseURL)weather?q=\(escapedCity!)&appid=\(openWeatherMapAPIKey)"
+        if let weatherRequestURL = URL(string: weatherRequestURLString) {
+        let session = URLSession.shared.dataTask(with: weatherRequestURL){(data, response, error) in
+            if let error = error { //Error when getting data
+                print("\n\n\n\n\n\n\n\nError: \n\(error)\n\n\n\n\n\n\n")
+            }
+            else { //Success
+                print("\n\n\n\n\n\n\n\n\nsuccess")
+                let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+                //print(json!)
+                if let dictionary = json as? [String: Any] {
+                    print(dictionary)
+                    let weatherData = self.parseData(dictionary: dictionary)
+                    closure(weatherData)
+                } else {
+                    print("JSON invalid")
+                }
+            }
+        }
+        session.resume()
+
+        }
+        else {
+            print(weatherRequestURLString)
+        }
+        
+        
+    }
     
     func getWeatherData(lat:String, lon:String, closure: @escaping (WeatherData) -> ()) {
         let weatherRequestURLString = "\(openWeatherMapBaseURL)weather?lat=\(lat)&lon=\(lon)&appid=\(openWeatherMapAPIKey)"
@@ -89,6 +123,40 @@ class Weather{
         
         session.resume()
         
+    }
+    
+    func getFiveDayWeather(city: String, closure: @escaping ([WeatherData]) -> ()) {
+        let escapedCity = city.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)
+        let weatherRequestURLString = "\(openWeatherMapBaseURL)forecast?q=\(escapedCity!)&appid=\(openWeatherMapAPIKey)"
+        let weatherRequestURL = URL(string: weatherRequestURLString)!
+        let session = URLSession.shared.dataTask(with: weatherRequestURL){(data, response, error) in
+            if let error = error { //Error when getting data
+                print("Error: \n\(error)")
+            }
+            else { //Success
+                let json = try? JSONSerialization.jsonObject(with: data!, options: [])
+                
+                var fiveDayData = [WeatherData]()
+                if let dictionary = json as? [String: Any] {
+                    if let dataArray = dictionary["list"] as? [[String:Any]] {
+                        var j = 0;
+                        var i = 0;
+                        while i < dataArray.count {
+                            fiveDayData.append(self.parseData(dictionary: dataArray[i]))
+                            j+=1
+                            i+=8
+                        }
+                        print(fiveDayData.count)
+                        closure(fiveDayData)
+                    } else {
+                        print("ErrorError")
+                    }
+                } else {
+                    print("Error")
+                }
+            }
+        }
+        session.resume()
     }
     
     func getFiveDayWeather(lat:String, lon:String, closure: @escaping ([WeatherData]) -> ()) {
