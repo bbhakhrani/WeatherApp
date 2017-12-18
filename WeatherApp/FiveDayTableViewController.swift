@@ -46,7 +46,7 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.reloadInputViews()
+        self.tableView.reloadData()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,15 +78,20 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return fiveDayData.count
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return fiveDayData.count
+        return 1
     }
 
-    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM dd, yyyy"
+        
+        return dateFormatter.string(from: fiveDayData[section].date)
+    }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "fiveDayCell", for: indexPath)
 
