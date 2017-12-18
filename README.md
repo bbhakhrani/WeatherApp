@@ -10,12 +10,13 @@ Goal:
   4. The UI should function for any size device (autolayout)
 
 Accomplished:
-  I was able to complete a good portion of the given requirements, Although there are some bugs. 
-  1.The data shows on the inital scree although it takes a few seconds to load. 
+  I was able to complete a good portion of the given requirements, Although there are some bugs.
+  
+  1. The data shows on the inital scree although it takes a few seconds to load. 
   2. the use can select a different city
-    -the data for that city loads if the switch is off. This has some issues in the display
-    -if the switch is turned back on, the data for the current location is loaded. this has some issues with displaying
-    -the data is reset when the app closes. I know I wold need to work with NSUserDefaults to get it working,
+      -the data for that city loads if the switch is off. This has some issues in the display
+      -if the switch is turned back on, the data for the current location is loaded. this has some issues with displaying
+      -the data is reset when the app closes. I know I wold need to work with NSUserDefaults to get it working,
           but I didnt get a chance to work on that
   3. I added a tab for the 5 day forecast. The 16 day data is restrincted for paid member, so I did not add ascreen for that  
         although the process would be quite similar to that used in the 5 day forecast
