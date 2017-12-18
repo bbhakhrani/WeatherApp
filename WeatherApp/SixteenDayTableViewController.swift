@@ -8,7 +8,7 @@
 
 import UIKit
 
-class sixteenDayTableViewController: UITableViewController {
+class SixteenDayTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -15,6 +15,7 @@ struct WeatherData {
     var description: String
     var city: String
     var iconName: String
+    var date: Date
 }
 
 class Weather{
@@ -30,10 +31,14 @@ class Weather{
         var description = ""
         var city = ""
         var iconName = ""
+        var time:Double = 0
         
             if let tmpCity = dictionary["name"] as? String {
                 city = tmpCity
             }
+        if let UTC = dictionary["dt"] as? Double {
+            time = UTC
+        }
             if let main = dictionary["main"] as? [String: Any] {
                 if let tmpTemp = main["temp"] as? Double {
                     temp = tmpTemp
@@ -53,13 +58,12 @@ class Weather{
                 }
                 if let tmpIconName = weatherArray[0]["icon"] as? String {
                     iconName = tmpIconName
-                    print(iconName)
                 }
                 
             } else {
                 print("weatther is not an array")
             }
-        let weatherData = WeatherData(temp: temp, tempMin: tempMin, tempMax: tempMax, description: description, city: city, iconName: iconName)
+        let weatherData = WeatherData(temp: temp, tempMin: tempMin, tempMax: tempMax, description: description, city: city, iconName: iconName, date: Date(timeIntervalSince1970: time))
         
         return weatherData
     }
@@ -99,17 +103,15 @@ class Weather{
                 
                 var fiveDayData = [WeatherData]()
                 if let dictionary = json as? [String: Any] {
-                    //print(dictionary)
                     if let dataArray = dictionary["list"] as? [[String:Any]] {
                         var j = 0;
                         var i = 0;
                         while i < dataArray.count {
-                            print(i)
-                            print(j)
                             fiveDayData.append(self.parseData(dictionary: dataArray[i]))
                             j+=1
                             i+=8
                         }
+                        print(fiveDayData.count)
                         closure(fiveDayData)
                     } else {
                         print("ErrorError")

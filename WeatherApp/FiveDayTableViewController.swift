@@ -43,7 +43,7 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
         manager.delegate = self
         manager.requestWhenInUseAuthorization()
         manager.requestLocation()
-        manager.startMonitoringSignificantLocationChanges()
+        //manager.startMonitoringSignificantLocationChanges()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -74,7 +74,8 @@ class FiveDayViewControllerTableViewController: UITableViewController, CLLocatio
 
         let weatherObject = fiveDayData[indexPath.row]
         cell.textLabel?.text = weatherObject.description
-
+        cell.detailTextLabel?.text = String(format: "%.2f", kelvinToFarenheit(kelvinTemp: weatherObject.tempMax)) + " \u{00B0}F / " + String(format: "%.2f", kelvinToFarenheit(kelvinTemp: weatherObject.tempMin)) + " \u{00B0}F"
+        cell.imageView?.image = UIImage(named: weatherObject.iconName)
         return cell
     }
     

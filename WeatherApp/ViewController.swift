@@ -9,20 +9,40 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
+    //top 100 cities by population
+    var dataArray = ["New York","Los Angeles","Chicago","Houston","Philadelphia","Phoenix","San Antonio","San Diego","Dallas","San Jose","Austin","Indianapolis","Jacksonville","San Francisco","Columbus","Charlotte","Fort Worth","Detroit","El Paso","Memphis","Seattle","Denver","Washington","Boston","Nashville","Baltimore","Oklahoma City","Louisville","Portland","Las Vegas","Milwaukee","Albuquerque","Tucson","Fresno","Sacramento","Long Beach","Kansas City","Mesa","Virginia Beach","Atlanta","Colorado Springs","Omaha","Raleigh","Miami","Oakland","Minneapolis","Tulsa","Cleveland","Wichita","Arlington","New Orleans","Bakersfield","Tampa","Honolulu","Aurora","Anaheim","Santa Ana","St. Louis","Riverside","Corpus Christi","Lexington","Pittsburgh","Anchorage","Stockton","Cincinnati","St. Paul","Toledo","Greensboro","Newark","Plano","Henderson","Lincoln","Buffalo","Jersey City","Chula Vista","Fort Wayne","Orlando","St. Petersburg","Chandler","Laredo","Norfolk","Durham","Madison","Lubbock","Irvine","Winston-Salem","Glendale","Garland","Hialeah","Reno","Chesapeake","Gilbert","Baton Rouge","Irving","Scottsdale","North Las Vegas","Fremont","Boise City","Richmond","San Bernardino"]
+    
+    @IBAction func resetButton(_ sender: Any) {
+    }
+    @IBAction func updateButton(_ sender: Any) {
+    }
     @IBOutlet weak var tempLabel: UILabel!
     @IBOutlet weak var descLabel: UILabel!
     @IBOutlet weak var cityLabel: UILabel!
     @IBOutlet weak var iconImageView: UIImageView!
+    @IBOutlet weak var CityPicker: UIPickerView!
 //    @IBOutlet weak var tempLabel: UILabel!
 //    
 //    @IBOutlet weak var descLabel: UILabel!
 //
 //    @IBOutlet weak var cityLabel: UILabel!
     
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return dataArray[row]
+    }
     
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return dataArray.count
+    }
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
     
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("hi")
+    }
     
     func kelvinToFarenheit(kelvinTemp: Double) -> Double {
         return ((kelvinTemp * 1.8) - 459.67)
@@ -56,6 +76,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        CityPicker.delegate = self
+        CityPicker.dataSource = self
+    
         // Do any additional setup after loading the view, typically from a nib.
         manager.delegate = self
         manager.requestWhenInUseAuthorization()
